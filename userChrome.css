@@ -4819,3 +4819,675 @@ tab-split-view-wrapper & {
 }
 }
 }
+
+/* ========================================================================
+   FIREFOX 153 — TRANSLUCENT PANEL COMPATIBILITY FIX
+   Restores the Liquid Glass background on the application, extensions,
+   overflow and bookmarks panels after the popup rendering changes.
+   ======================================================================== */
+
+@media (-moz-mac-tahoe-theme) {
+  :root {
+    /* PANEL GLASS:
+       First value = light mode panel tint and opacity.
+       Second value = dark mode panel tint and opacity. */
+    --liquid-panel-bg: light-dark(
+      rgba(255, 255, 255, 0.90),
+      rgba(32, 33, 35, 0.78)
+    );
+
+    /* HOVER BLUE:
+       These are fully opaque RGB colors. Change only these two values
+       when adjusting the selected-item blue. */
+    --liquid-panel-hover: light-dark(
+      rgb(0, 122, 255),
+      rgb(10, 132, 255)
+    );
+    --liquid-panel-border: light-dark(
+      rgba(255, 255, 255, 0.52),
+      rgba(255, 255, 255, 0.18)
+    );
+  }
+
+  /* Firefox 153 paints several popup backgrounds on the anonymous
+     popup-content part instead of only on .panel-arrowcontent. */
+  :is(
+    #appMenu-popup,
+    #unified-extensions-panel,
+    #widget-overflow,
+    #BMB_bookmarksPopup,
+    #bookmarksMenuPopup,
+    #PlacesToolbar menupopup,
+    panel[type="arrow"],
+    menupopup
+  ) {
+    --arrowpanel-background: transparent !important;
+    --panel-background: transparent !important;
+    --panel-background-color: transparent !important;
+    --panel-border-color: transparent !important;
+    --arrowpanel-border-color: transparent !important;
+  }
+
+  :is(
+    #appMenu-popup,
+    #unified-extensions-panel,
+    #widget-overflow,
+    panel[type="arrow"]
+  )::part(content),
+  :is(
+    #BMB_bookmarksPopup,
+    #bookmarksMenuPopup,
+    #PlacesToolbar menupopup,
+    menupopup
+  )::part(content),
+  :is(
+    #appMenu-popup,
+    #unified-extensions-panel,
+    #widget-overflow,
+    panel[type="arrow"]
+  ) > .panel-arrowcontainer > .panel-arrowcontent,
+  :is(
+    #appMenu-popup,
+    #unified-extensions-panel,
+    #widget-overflow,
+    panel[type="arrow"]
+  ) .panel-arrowcontent,
+  :is(
+    #BMB_bookmarksPopup,
+    #bookmarksMenuPopup,
+    #PlacesToolbar menupopup,
+    menupopup
+  ) > .menupopup-arrowscrollbox {
+    appearance: none !important;
+    -moz-appearance: none !important;
+    background: var(--liquid-panel-bg) !important;
+    background-color: var(--liquid-panel-bg) !important;
+    /* PANEL BLUR:
+       blur() controls sharpness; saturate() controls color strength;
+       brightness() controls the icy/white appearance. */
+    backdrop-filter: blur(14px) saturate(1.16) brightness(1.04) !important;
+    border: 1px solid var(--liquid-panel-border) !important;
+    border-radius: 12px !important;
+    box-shadow: var(--bs1) !important;
+    opacity: 1 !important;
+  }
+
+  /* Keep all inner layers clear, otherwise they cover the blurred surface. */
+  :is(#appMenu-popup, #unified-extensions-panel, #widget-overflow) :is(
+    panelmultiview,
+    panelview,
+    .panel-viewcontainer,
+    .panel-viewstack,
+    .panel-subview-body,
+    .popup-internal-box
+  ) {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  /* Firefox 153 App Menu hover: opaque native macOS-style blue. */
+  #appMenu-popup {
+    --appmenu-tahoe-bg: var(--liquid-panel-bg) !important;
+    --appmenu-tahoe-selected: var(--liquid-panel-hover) !important;
+  }
+
+  #appMenu-popup .subviewbutton:not([disabled]):is(:hover, :focus-visible, [open]),
+  #appMenu-popup panelview .toolbarbutton-1:not([disabled]):is(:hover, :focus-visible, [open]),
+  #appMenu-popup .subviewbutton:not([disabled]):is(:hover:active, [checked]),
+  #appMenu-popup panelview .toolbarbutton-1:not([disabled]):is(:hover:active, [checked]),
+  #unified-extensions-panel .subviewbutton:not([disabled]):is(:hover, :focus-visible, [open]),
+  #widget-overflow .subviewbutton:not([disabled]):is(:hover, :focus-visible, [open]) {
+    color: #fff !important;
+    background: var(--liquid-panel-hover) !important;
+    background-color: var(--liquid-panel-hover) !important;
+  }
+
+  /* Places/bookmarks hover should use the same opaque native blue. */
+  :is(
+    #BMB_bookmarksPopup,
+    #bookmarksMenuPopup,
+    #PlacesToolbar menupopup,
+    menupopup
+  ) :is(menu, menuitem)[_moz-menuactive]:not([disabled]),
+  :is(
+    #BMB_bookmarksPopup,
+    #bookmarksMenuPopup,
+    #PlacesToolbar menupopup,
+    menupopup
+  ) :is(menu, menuitem):hover:not([disabled]) {
+    color: #fff !important;
+    background: var(--liquid-panel-hover) !important;
+    background-color: var(--liquid-panel-hover) !important;
+  }
+}
+
+/* ========================================================================
+   FIREFOX 153 — PANEL TUNING
+   The values most likely to be adjusted later are commented in place.
+   ======================================================================== */
+@media (-moz-mac-tahoe-theme) {
+
+  /* HAMBURGER / EXTENSIONS / OVERFLOW INSET
+     Smaller value = hover rows reach closer to the panel edge.
+     The current 4px matches the preferred hamburger-menu spacing. */
+  :is(
+    #appMenu-popup,
+    #unified-extensions-panel,
+    #widget-overflow
+  ) :is(
+    .panel-subview-body,
+    .panel-subview-footer,
+    .panel-header
+  ) {
+    padding-inline: 4px !important;
+
+  }
+
+  :is(
+    #appMenu-popup,
+    #unified-extensions-panel,
+    #widget-overflow
+  ) :is(
+    .subviewbutton,
+    panelview .toolbarbutton-1
+  ) {
+    margin-inline: 0 !important;
+  }
+
+  /* BOOKMARKS / PLACES HOVER INSET
+     0px makes the blue selection wider than the previous 3px setting.
+     Increase this value only when more space is wanted at both sides. */
+  :is(
+    #BMB_bookmarksPopup,
+    #bookmarksMenuPopup,
+    #PlacesToolbar menupopup,
+    menupopup
+  ) :is(menu, menuitem) {
+/*    margin-inline: 0 !important; */
+    margin-left: 5px !important; 
+    margin-right: 5px !important; 
+    margin-top: 0px !important;
+    margin-bottom: 1px !important; 
+    padding-top: 13px !important;
+    padding-bottom: 13px !important;
+  }
+
+  /* HAMBURGER HOVER — force a genuinely opaque native blue.
+     Firefox 153 can otherwise blend its own hover layer over this color. */
+  #appMenu-popup {
+    --button-hover-bgcolor: var(--liquid-panel-hover) !important;
+    --button-active-bgcolor: var(--liquid-panel-hover) !important;
+    --button-background-color-hover: var(--liquid-panel-hover) !important;
+    --button-background-color-active: var(--liquid-panel-hover) !important;
+    --panel-item-hover-bgcolor: var(--liquid-panel-hover) !important;
+    --panel-item-active-bgcolor: var(--liquid-panel-hover) !important;
+  }
+
+  #appMenu-popup .subviewbutton:not([disabled]):is(
+    :hover,
+    :focus-visible,
+    [open],
+    [checked]
+  ),
+  #appMenu-popup panelview .toolbarbutton-1:not([disabled]):is(
+    :hover,
+    :focus-visible,
+    [open],
+    [checked]
+  ) {
+    color: #fff !important;
+    background: var(--liquid-panel-hover) !important;
+    background-color: var(--liquid-panel-hover) !important;
+    background-image: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    mix-blend-mode: normal !important;
+  }
+
+  /* Keep bookmarks/Places hover on the same solid blue. */
+  :is(
+    #BMB_bookmarksPopup,
+    #bookmarksMenuPopup,
+    #PlacesToolbar menupopup,
+    menupopup
+  ) :is(menu, menuitem)[_moz-menuactive]:not([disabled]),
+  :is(
+    #BMB_bookmarksPopup,
+    #bookmarksMenuPopup,
+    #PlacesToolbar menupopup,
+    menupopup
+  ) :is(menu, menuitem):hover:not([disabled]) {
+    color: #fff !important;
+    background: var(--liquid-panel-hover) !important;
+    background-color: var(--liquid-panel-hover) !important;
+    background-image: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* ========================================================================
+   FIREFOX 153 — HAMBURGER OPAQUE HOVER FIX
+   Only the hamburger/app menu is affected. Bookmarks/Favorites rules above
+   are intentionally left untouched.
+
+   Change the two RGB values below to tune the hamburger highlight color.
+   Do not use rgba() here unless transparency is desired.
+   ======================================================================== */
+@media (-moz-mac-tahoe-theme) {
+  #appMenu-popup {
+    --appmenu-solid-hover: light-dark(
+      rgb(0, 122, 255),
+      rgb(10, 132, 255)
+    ) !important;
+
+    --button-hover-bgcolor: var(--appmenu-solid-hover) !important;
+    --button-active-bgcolor: var(--appmenu-solid-hover) !important;
+    --button-background-color-hover: var(--appmenu-solid-hover) !important;
+    --button-background-color-active: var(--appmenu-solid-hover) !important;
+    --panel-item-hover-bgcolor: var(--appmenu-solid-hover) !important;
+    --panel-item-active-bgcolor: var(--appmenu-solid-hover) !important;
+    --appmenu-tahoe-selected: var(--appmenu-solid-hover) !important;
+  }
+
+  /* Classic XUL toolbarbuttons/subview buttons. */
+  #appMenu-popup :is(
+    .subviewbutton,
+    panelview .toolbarbutton-1,
+    toolbarbutton
+  ):not([disabled]):is(
+    :hover,
+    :focus-visible,
+    [open],
+    [checked]
+  ) {
+    appearance: none !important;
+    -moz-appearance: none !important;
+    color: #fff !important;
+    background: var(--appmenu-solid-hover) !important;
+    background-color: var(--appmenu-solid-hover) !important;
+    background-image: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    mix-blend-mode: normal !important;
+    box-shadow: none !important;
+  }
+
+  /* Remove any translucent overlay painted by pseudo-elements. */
+  #appMenu-popup :is(
+    .subviewbutton,
+    panelview .toolbarbutton-1,
+    toolbarbutton
+  ):not([disabled]):is(
+    :hover,
+    :focus-visible,
+    [open],
+    [checked]
+  )::before,
+  #appMenu-popup :is(
+    .subviewbutton,
+    panelview .toolbarbutton-1,
+    toolbarbutton
+  ):not([disabled]):is(
+    :hover,
+    :focus-visible,
+    [open],
+    [checked]
+  )::after {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    opacity: 0 !important;
+  }
+
+  /* Firefox 153 custom-element buttons. */
+  #appMenu-popup moz-button:not([disabled]):is(
+    :hover,
+    :focus-visible,
+    [open],
+    [checked]
+  )::part(button) {
+    color: #fff !important;
+    background: var(--appmenu-solid-hover) !important;
+    background-color: var(--appmenu-solid-hover) !important;
+    background-image: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    mix-blend-mode: normal !important;
+    box-shadow: none !important;
+  }
+}
+
+/* ========================================================================
+   FIREFOX 153 — URLBAR SOLID HOVER + BOOKMARKS EDGE SPACING
+
+   URLBAR BLUE:
+   Change these two RGB values to tune the URL-bar selected-row color.
+   They are intentionally opaque and currently match the hamburger menu.
+
+   BOOKMARKS OUTER SPACING:
+   --bookmarks-popup-edge-block controls only the empty space between the
+   first/last bookmark row and the popup's top/bottom edge.
+   Your menu-item margin and padding settings above are left untouched.
+   ======================================================================== */
+@media (-moz-mac-tahoe-theme) {
+  :root {
+    --urlbar-solid-hover: light-dark(
+      rgb(0, 122, 255),
+      rgb(10, 132, 255)
+    );
+
+    /* Reduce this for less empty space above the first and below the last row. */
+    --bookmarks-popup-edge-block: 5px;
+  }
+
+  /* URL-bar result rows: remove the old semi-transparent var(--bg1) layer. */
+  #urlbar .urlbarView-row:is(
+    [selected],
+    [row-selectable]:not([selected]):hover
+  ) {
+    color: #fff !important;
+    background: var(--urlbar-solid-hover) !important;
+    background-color: var(--urlbar-solid-hover) !important;
+    background-image: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    mix-blend-mode: normal !important;
+  }
+
+  #urlbar .urlbarView-row:is(
+    [selected],
+    [row-selectable]:not([selected]):hover
+  ) > .urlbarView-row-inner {
+    color: #fff !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    opacity: 1 !important;
+  }
+
+  /* Keep URL/action text white on the solid blue row. */
+  #urlbar .urlbarView-row:is(
+    [selected],
+    [row-selectable]:not([selected]):hover
+  ) :is(
+    .urlbarView-title,
+    .urlbarView-url,
+    .urlbarView-action,
+    .urlbarView-action-btn
+  ) {
+    color: #fff !important;
+  }
+
+  /* Bookmarks popup: only normalize the OUTER top/bottom edge spacing.
+     This does not alter the per-item margins/padding you tuned manually. */
+  :is(
+    #BMB_bookmarksPopup,
+    #bookmarksMenuPopup,
+    #PlacesToolbar menupopup
+  ) > .menupopup-arrowscrollbox {
+    padding-top: var(--bookmarks-popup-edge-block) !important;
+    padding-bottom: var(--bookmarks-popup-edge-block) !important;
+  }
+
+  /* Firefox may place the scrollbox one anonymous layer deeper. */
+  :is(
+    #BMB_bookmarksPopup,
+    #bookmarksMenuPopup,
+    #PlacesToolbar menupopup
+  ) .popup-internal-box {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+}
+
+/* ========================================================================
+   FIREFOX 153 — BOOKMARKS EDGE + APP MENU PROFILE SPACING FIX
+
+   BOOKMARKS:
+   Your per-item left/right/top/bottom margin and padding values are preserved.
+   The variable below moves only the FIRST and LAST visible menu rows toward
+   the popup edge, because Firefox's anonymous popup wrapper ignores the
+   earlier --bookmarks-popup-edge-block padding override.
+
+   More negative = smaller top/bottom outer gap.
+   0px = Firefox's current outer gap.
+   ======================================================================== */
+@media (-moz-mac-tahoe-theme) {
+  :root {
+    --bookmarks-first-last-edge-offset: 5px;
+  }
+
+  /* Remove padding from all known popup wrapper layers. */
+  #BMB_bookmarksPopup {
+    --panel-padding: 0px !important;
+    --panel-padding-block: 0px !important;
+  }
+
+  #BMB_bookmarksPopup::part(content),
+  #BMB_bookmarksPopup > .menupopup-arrowscrollbox,
+  #BMB_bookmarksPopup .menupopup-arrowscrollbox,
+  #BMB_bookmarksPopup .popup-internal-box {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  /* Actual visual correction: affect only the outermost first/last rows.
+     All hand-tuned per-item padding and horizontal margins remain unchanged. */
+  #BMB_bookmarksPopup :is(menu, menuitem):first-of-type {
+    margin-top: var(--bookmarks-first-last-edge-offset) !important;
+  }
+
+  #BMB_bookmarksPopup :is(menu, menuitem):last-of-type {
+    margin-bottom: var(--bookmarks-first-last-edge-offset) !important;
+  }
+
+  /* ----------------------------------------------------------------------
+     APP MENU PROFILE HEADER
+     Firefox's account/profile entry is a toolbaritem containing another
+     toolbarbutton. The theme's generic fixed 24px height was applied to both
+     levels, which compressed the first two bold rows together.
+
+     These rules affect only the account/profile area at the top.
+     ---------------------------------------------------------------------- */
+
+  #appMenu-popup #appMenu-fxa-status2 {
+    box-sizing: border-box !important;
+    min-height: 30px !important;
+    height: auto !important;
+    margin: 2px 6px !important;
+    padding: 0 !important;
+    line-height: normal !important;
+  }
+
+  #appMenu-popup #appMenu-fxa-status2 > #appMenu-fxa-label2 {
+    box-sizing: border-box !important;
+    min-height: 30px !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 4px 8px !important;
+    line-height: normal !important;
+  }
+
+  #appMenu-popup #appMenu-fxa-status2 :is(
+    #appMenu-header-title,
+    #appMenu-header-description
+  ) {
+    min-height: 0 !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 16px !important;
+  }
+
+  /* Add a real gap before the separate Profiles/Create Profile row. */
+  #appMenu-popup :is(
+    #appMenu-profiles-button,
+    #appMenu-empty-profiles-button
+  ) {
+    margin-top: 3px !important;
+  }
+}
+
+/* ========================================================================
+   FIREFOX 153 — ACCOUNT/SYNC SUBVIEW SPACING FIX
+
+   This targets the separate Account/Sync subview identified by
+   #fxa-menu-header-title. It does not alter the main hamburger menu,
+   Favorites/Bookmarks spacing, or the 5px bookmark edge correction.
+
+   The original theme gives generic app-menu buttons a fixed 24px height.
+   Several Account/Sync entries contain two text lines, so that fixed height
+   causes the title, status and "Last synced" text to overlap.
+   ======================================================================== */
+@media (-moz-mac-tahoe-theme) {
+
+  /* Let the Account/Sync panel calculate its own row heights. */
+  #appMenu-popup panelview:has(#fxa-menu-header-title) :is(
+    .subviewbutton,
+    toolbarbutton,
+    toolbaritem
+  ) {
+    box-sizing: border-box !important;
+    height: auto !important;
+    max-height: none !important;
+    line-height: normal !important;
+  }
+
+  /* Normal one-line Account rows. */
+  #appMenu-popup panelview:has(#fxa-menu-header-title) :is(
+    .subviewbutton,
+    toolbarbutton
+  ) {
+    min-height: 28px !important;
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+  }
+
+  /* Two-line labels such as "Sync is On" + "Last synced..." need more room. */
+  #appMenu-popup panelview:has(#fxa-menu-header-title) :is(
+    .subviewbutton,
+    toolbarbutton,
+    toolbaritem
+  ):has(
+    .toolbarbutton-multiline-text,
+    .subviewbutton-description,
+    .text-deemphasized,
+    description
+  ) {
+    min-height: 42px !important;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    align-items: center !important;
+  }
+
+  /* Reset fixed line-height inherited from the generic app-menu text rule. */
+  #appMenu-popup panelview:has(#fxa-menu-header-title) :is(
+    .toolbarbutton-text,
+    .toolbarbutton-multiline-text,
+    .subviewbutton-description,
+    .text-deemphasized,
+    label,
+    description
+  ) {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    line-height: 16px !important;
+  }
+
+  /* Keep stacked title/description text separated instead of overlaid. */
+  #appMenu-popup panelview:has(#fxa-menu-header-title) :is(
+    .toolbarbutton-multiline-text,
+    .subviewbutton-text
+  ) {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    gap: 2px !important;
+  }
+
+  /* Account heading itself. */
+  #appMenu-popup #fxa-menu-header-title {
+    height: auto !important;
+    min-height: 24px !important;
+    line-height: 18px !important;
+    margin-bottom: 3px !important;
+  }
+}
+
+/* ========================================================================
+   FIREFOX 153 — EXTENSIONS PANEL SPACING + RADIUS FIX
+
+   This block affects ONLY the Unified Extensions popup.
+   Everything already working in the hamburger, URL bar, Account/Sync and
+   Favorites/Bookmarks menus is left untouched.
+
+   TUNING:
+   --extensions-item-side-gap = distance between each row and panel edge.
+   --extensions-item-radius   = corner radius of extension rows/footer.
+   ======================================================================== */
+@media (-moz-mac-tahoe-theme) {
+  #unified-extensions-panel {
+    --extensions-item-side-gap: 5px;
+    --extensions-item-radius: 7px;
+
+    /* Override the global 12px panel-item radius only inside this popup. */
+    --arrowpanel-menuitem-border-radius:
+      var(--extensions-item-radius) !important;
+    --panel-menuitem-border-radius:
+      var(--extensions-item-radius) !important;
+  }
+
+  /* The panel body itself should not add a second horizontal inset. */
+  #unified-extensions-panel :is(
+    #unified-extensions-view,
+    .panel-subview-body
+  ) {
+    padding-inline: 0 !important;
+  }
+
+  /* Installed-extension rows. */
+  #unified-extensions-panel :is(
+    .unified-extensions-item,
+    .unified-extensions-item-row-wrapper
+  ) {
+    margin-inline: var(--extensions-item-side-gap) !important;
+  }
+
+  #unified-extensions-panel
+  .unified-extensions-item-row-wrapper > .subviewbutton {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    margin-inline: 0 !important;
+    border-radius: var(--extensions-item-radius) !important;
+  }
+
+  /* Manage extensions footer button. */
+  #unified-extensions-panel #unified-extensions-manage-extensions {
+    box-sizing: border-box !important;
+    width: calc(
+      100% - (2 * var(--extensions-item-side-gap))
+    ) !important;
+    margin:
+      4px var(--extensions-item-side-gap)
+      var(--extensions-item-side-gap) !important;
+    border-radius: var(--extensions-item-radius) !important;
+  }
+
+  /* Some Firefox builds wrap the footer button in a footer container. */
+  #unified-extensions-panel .panel-subview-footer {
+    padding: 0 !important;
+  }
+
+  #unified-extensions-panel :is(
+    .subviewbutton,
+    #unified-extensions-manage-extensions
+  ):is(:hover, :focus-visible, [open], [checked]) {
+    border-radius: var(--extensions-item-radius) !important;
+  }
+}
+
