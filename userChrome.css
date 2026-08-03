@@ -2351,15 +2351,20 @@ window[role="dialog"] {
     }
   }
 
-  #nav-bar .toolbarbutton-1 {
-    background-color: var(--bg4) !important;
-    transition: background-color 0.12s cubic-bezier(0.25, 1, 0.5, 1) !important;
-  }
-  
-  #nav-bar .toolbarbutton-1:hover {
-    background-color: var(--bg5) !important;
-  }
+ #nav-bar .toolbarbutton-1:not(
+  #back-button,
+  #forward-button
+) {
+  background-color: var(--bg4) !important;
+  transition: background-color 0.12s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
 
+#nav-bar .toolbarbutton-1:not(
+  #back-button,
+  #forward-button
+):hover {
+  background-color: var(--bg5) !important;
+}
   #nav-bar .toolbarbutton-1 > .toolbarbutton-icon,
   #nav-bar .toolbarbutton-1 > .toolbarbutton-badge-stack {
     opacity: 1 !important;
@@ -5490,4 +5495,73 @@ tab-split-view-wrapper & {
     border-radius: var(--extensions-item-radius) !important;
   }
 }
+
+/* ========================================================================
+   FIREFOX — TOOLBAR HORIZONTAL BUTTON SPACING
+
+   Only the horizontal spacing of the standalone navigation-bar buttons
+   is changed. All vertical positioning, menu fixes, URL bar styling,
+   bookmarks, account and extensions-panel rules remain untouched.
+
+   Original margin was 8px on each side.
+   6.5px reduces the visible gap between two neighbouring buttons by 3px.
+   Lower value = buttons closer together.
+   ======================================================================== */
+@media (-moz-mac-tahoe-theme) {
+  :root {
+    --toolbar-button-horizontal-margin: 2.5px;
+  }
+
+  #nav-bar .toolbarbutton-1:not(
+    #back-button,
+    #forward-button,
+    #PanelUI-menu-button,
+    #nav-bar-overflow-button,
+    #unified-extensions-button,
+    #new-tab-button,
+    #tabs-newtab-button,
+    #alltabs-button
+  ) {
+    margin-inline:
+      var(--toolbar-button-horizontal-margin) !important;
+  }
+}
+
+/* Jobb oldali normál gombok és az Extensions–hamburger csoport távolsága */
+@media (-moz-mac-tahoe-theme) {
+  @media not -moz-pref("gwt.oneliner") {
+    #nav-bar {
+      padding-inline-end: 85px !important;
+    }
+  }
+}
+
+/* Bal oldali toolbar-gombok vízszintes térköze */
+@media (-moz-mac-tahoe-theme) {
+  :root {
+    --left-toolbar-button-horizontal-margin: 4px;
+  }
+
+  /* Back/Forward és Reload közötti rés */
+  #stop-reload-button {
+    margin-inline-start: -3px !important;
+  }
+
+  /* Reload után, az URL-sáv előtt lévő gombok */
+  #nav-bar-customization-target
+  > #stop-reload-button
+  ~ :is(
+    toolbarbutton:not(
+      #PanelUI-menu-button,
+      #nav-bar-overflow-button,
+      #unified-extensions-button
+    ),
+    toolbarpaletteitem > toolbarbutton
+  ) {
+    margin-inline:
+      var(--left-toolbar-button-horizontal-margin) !important;
+  }
+}
+
+
 
