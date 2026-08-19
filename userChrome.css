@@ -1096,11 +1096,6 @@ toolbar .toolbarbutton-1:not(#back-button, #forward-button, #PanelUI-menu-button
   flex: 0 0 auto !important;
 }
 
-#nav-bar:not([customizing]):has(#downloads-button[hidden]) #bookmarks-menu-button {
-  margin-inline-start: 60px !important;
-}
-
-
 /* -------- URLBAR DROPDOWN MOD -------- */
 
 #urlbar[open] > .urlbarView,
@@ -2971,6 +2966,19 @@ body {
 
 /* -------- DOWNLOADS TOOLBAR BUTTON MOD -------- */
 
+/* Safari-like auto-hide without toolbar layout shift:
+ * Keep the button's own toolbar slot reserved while its icon is hidden.
+ * This works independently of Flexible Space items and neighboring buttons.
+ * Buttons moved outside #nav-bar retain Firefox's native behavior.
+ */
+#nav-bar:not([customizing]) #downloads-button[hidden],
+#nav-bar:not([customizing]) #downloads-button:not([progress]):not([notification]):not([attention="info"]):not([attention="warning"]):not([attention="severe"]) {
+  display: flex !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 #downloads-button {
   --downloads-toolbar-blue: light-dark(rgb(42, 120, 245), rgb(95, 156, 255));
   --downloads-toolbar-track: light-dark(rgba(0, 0, 0, 0.16), rgba(255, 255, 255, 0.24));
@@ -2983,14 +2991,23 @@ body {
   overflow: visible !important;
 }
 
-#downloads-button > .toolbarbutton-badge-stack > #downloads-indicator-start-box,
-#downloads-button > .toolbarbutton-badge-stack > #downloads-indicator-finish-box,
 #downloads-button > .toolbarbutton-badge-stack > #downloads-indicator-notification,
 #downloads-button > .toolbarbutton-badge-stack > .toolbarbutton-badge {
   display: none !important;
   visibility: hidden !important;
   opacity: 0 !important;
   animation: none !important;
+}
+
+/* Keep Firefox's notification animations running invisibly. Firefox removes
+ * the [notification] state on animationend; display:none would leave that
+ * state stuck until the browser window is closed. */
+#downloads-button > .toolbarbutton-badge-stack > #downloads-indicator-start-box,
+#downloads-button > .toolbarbutton-badge-stack > #downloads-indicator-finish-box {
+  display: block !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 #downloads-indicator-anchor {
@@ -5562,6 +5579,3 @@ tab-split-view-wrapper & {
       var(--left-toolbar-button-horizontal-margin) !important;
   }
 }
-
-
-
