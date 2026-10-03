@@ -1,5 +1,3 @@
-/* -------- FIREFOX - SAFARI LIKE -------- */
-
 @media (-moz-mac-tahoe-theme) {
 :root {
   --bg0: #8867fc;
@@ -14,20 +12,11 @@
   --bs2: 0 5px 15px rgba(0, 0, 0, .25), inset 0 0 0 .5px rgba(0, 0, 0, .78), 0 0 0 .5px rgba(0, 0, 0, .2);
   --newtab-background-color-secondary: transparent !important;
   --border-color-interactive: var(--in-content-box-border-color) !important;
-  --in-content-focus-outline-color: var(--focus-outline-color) !important;
+
   --button-background-color-primary: var(--color-accent-primary) !important;
   --button-background-color-primary-hover: var(--color-accent-primary-hover) !important;
   --button-background-color-primary-active: var(--color-accent-primary-active) !important;
-  --in-content-primary-button-background: var(--color-accent-primary) !important;
-  --in-content-primary-button-background-hover: var(--color-accent-primary-hover) !important;
-  --in-content-primary-button-background-active: var(--color-accent-primary-active) !important;
-  --in-content-primary-button-text-color: #fff !important;
-  --checkbox-checked-bgcolor: var(--color-accent-primary) !important;
-  --checkbox-checked-hover-bgcolor: var(--color-accent-primary-hover) !important;
-  --checkbox-checked-active-bgcolor: var(--color-accent-primary-active) !important;
-  --brand-color-accent: var(--color-accent-primary) !important;
-  --brand-color-accent-hover: var(--color-accent-primary-hover) !important;
-  --brand-color-accent-active: var(--color-accent-primary-active) !important;
+
   --newtab-primary-action-background: var(--color-accent-primary) !important;
   --color-accent-primary: AccentColor !important;
   --color-accent-primary-hover: color-mix(in srgb, AccentColor 90%, #fff) !important;
@@ -45,7 +34,7 @@
   --focus-outline-color: light-dark(color-mix(in srgb, var(--bg0) 55%, transparent), color-mix(in srgb, var(--bg0) 45%, #555)) !important;
 }
 @media not -moz-pref("gwt.atbc") {
-  --in-content-page-background: light-dark(#fff, #202121) !important;
+
   --newtab-background-color: light-dark(#fff, #202121) !important;
 }
 :-moz-window-inactive {
@@ -72,8 +61,7 @@
   --text-color-accent-primary-selected: #fff !important;
   --newtab-primary-element-text-color: #fff !important;
 @media not -moz-pref("gwt.atbc") {
-  --in-content-box-background: #282828 !important;
-  --in-content-table-background: #252525 !important;
+
   --color-gray-80: #282828 !important;
   --color-gray-90: #202121 !important;
 }
@@ -108,7 +96,7 @@ body { background-color: #202121 !important; } }
 }
 @media not -moz-pref("gwt.atbc") {
   --fxview-background-color: #202121 !important;
-  --in-content-page-background: #202121 !important;
+
   --background-color-canvas: #202121 !important;
   --input-text-background-color: #282828 !important;
 }
@@ -139,7 +127,7 @@ input[type="search"] {
 }
 }
 
-#searchInput[focused] { 
+#searchInput[focused] {
   outline-color: var(--focus-outline-color) !important;
   outline-width: 3.5px !important;
   outline-offset: -1px !important;
@@ -388,7 +376,7 @@ button:not(.toggle-button) {
   --card-box-shadow: none !important;
   --card-background-color: var(--bg1) !important;
   --box-border: none !important;
-  --box-group-border: none !important;
+
   --promo-background-color: var(--bg1) !important;
 }
 .navigation::after {
@@ -440,7 +428,7 @@ input:not([type="checkbox"], [type="radio"], [type="button"]) {
 }
 
 @-moz-document url("about:privatebrowsing") {
-:root { --in-content-page-background: transparent !important; }
+
 body {
   --newtab-search-icon: url("chrome://global/skin/icons/search-glass.svg") !important;
   background-repeat: no-repeat;
@@ -489,7 +477,7 @@ body {
 }
 
 @-moz-document url-prefix("about:newtab"), url-prefix("about:home") {
-body { 
+body {
   --newtab-search-icon: url("chrome://global/skin/icons/search-glass.svg") !important;
   background-image: var(--newtab-wallpaper, ""), repeating-linear-gradient(-45deg, var(--newtab-wallpaper-color, "") 0 250px, #fff 0 500px) !important;
 @media (prefers-color-scheme: dark) {
@@ -630,7 +618,6 @@ body {
   background-color: light-dark(rgba(70, 70, 70, .15), rgba(170, 170, 170, .2)) !important;
   transition: background .5s !important;
 }
-
 
 .search-button:focus {
   border: none !important;

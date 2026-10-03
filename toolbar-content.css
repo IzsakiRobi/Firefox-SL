@@ -1,0 +1,33 @@
+@media (-moz-mac-tahoe-theme) and (not (prefers-reduced-transparency)) and (not -moz-pref("sl.content-under-toolbar.disabled")) {
+  :root:not([inFullscreen], [inDOMFullscreen], [customizing], [chromehidden~="toolbar"], [chromehidden~="location"]):not(:has(#tabbrowser-tabpanels[splitview], .devtools-toolbox-bottom-iframe, .devtools-toolbox-side-iframe)) {
+    clip-path: inset(0);
+
+    #sidebar-container,
+    #sidebar-box {
+      margin-top: 52px !important;
+    }
+
+    @media not -moz-pref("sidebar.verticalTabs") {
+      &:has(#tabbrowser-tabs .tabbrowser-tab:not([hidden]) ~ .tabbrowser-tab:not([hidden])) {
+        #sidebar-container,
+        #sidebar-box {
+          margin-top: 90px !important;
+        }
+      }
+    }
+
+    #navigator-toolbox {
+      position: absolute !important;
+      inset: 0 0 auto !important;
+      min-height: 52px !important;
+      z-index: 10 !important;
+      background: light-dark(rgba(255, 255, 255, .80), rgba(0, 0, 0, .14)) !important;
+      backdrop-filter: blur(6px) !important;
+
+      &:has(#urlbar[pageproxystate="invalid"]:not([usertyping])) {
+        background: light-dark(rgba(255, 255, 255, .20), rgba(0, 0, 0, .14)) !important;
+        backdrop-filter: none !important;
+      }
+    }
+  }
+}
