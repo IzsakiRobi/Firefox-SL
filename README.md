@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> Firefox 157 (Nova) users must set `browser.nova.enabled` and `toolkit.legacyUserProfileCustomizations.stylesheets` to `true` in `about:config`, then fully restart Firefox.
+
 # Firefox-SL
 
 <p align="center">
@@ -18,6 +21,7 @@ v1.3
 - Refined translucent toolbar, URL bar and popup menu styling.
 - Improved menu spacing, corner radii, hover states and toolbar button alignment.
 - Added optional content-under-toolbar support with the signed SL Companion helper.
+- Kept restricted Firefox pages below the translucent toolbar without helper access.
 
 ## Install
 
@@ -26,7 +30,7 @@ v1.3
 3. Find the profile in use, then click **Show in Finder** next to **Root Directory**.
 4. Quit Firefox and back up any existing `chrome` folder.
 5. Copy the extracted `chrome` folder into the profile root.
-6. Open `about:config` and set `toolkit.legacyUserProfileCustomizations.stylesheets` to `true`.
+6. Open `about:config` and set `browser.nova.enabled` and `toolkit.legacyUserProfileCustomizations.stylesheets` to `true`.
 7. Start Firefox again.
 
 ## SL Companion helper
