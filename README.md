@@ -1,5 +1,5 @@
 > [!IMPORTANT]
-> Firefox 157 (Nova) users must set `browser.nova.enabled` and `toolkit.legacyUserProfileCustomizations.stylesheets` to `true` in `about:config`, then fully restart Firefox.
+> Firefox 157 users must set `browser.nova.enabled` to `false` and `toolkit.legacyUserProfileCustomizations.stylesheets` to `true` in `about:config`, then fully restart Firefox.
 
 # Firefox-SL
 
@@ -30,7 +30,7 @@ v1.3
 3. Find the profile in use, then click **Show in Finder** next to **Root Directory**.
 4. Quit Firefox and back up any existing `chrome` folder.
 5. Copy the extracted `chrome` folder into the profile root.
-6. Open `about:config` and set `browser.nova.enabled` and `toolkit.legacyUserProfileCustomizations.stylesheets` to `true`.
+6. Open `about:config`, set `browser.nova.enabled` to `false`, and set `toolkit.legacyUserProfileCustomizations.stylesheets` to `true`.
 7. Start Firefox again.
 
 ## SL Companion helper
