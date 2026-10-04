@@ -19,9 +19,11 @@ v1.3
 
 - Updated for Firefox 157.
 - Refined translucent toolbar, URL bar and popup menu styling.
+- Updated toolbar icons.
 - Improved menu spacing, corner radii, hover states and toolbar button alignment.
 - Added optional content-under-toolbar support with the signed SL Companion helper.
 - Kept restricted Firefox pages below the translucent toolbar without helper access.
+- Fixed duplicated or stale toolbar spacing after a full Firefox restart.
 
 ## Install
 

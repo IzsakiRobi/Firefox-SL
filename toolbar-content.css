@@ -2,10 +2,6 @@
   :root:not([inFullscreen], [inDOMFullscreen], [customizing], [chromehidden~="toolbar"], [chromehidden~="location"]):not(:has(#tabbrowser-tabpanels[splitview], .devtools-toolbox-bottom-iframe, .devtools-toolbox-side-iframe)) {
     clip-path: inset(0);
 
-    #tabbrowser-tabpanels browser[remoteType="privilegedabout"] {
-      margin-top: 52px !important;
-    }
-
     #sidebar-container,
     #sidebar-box {
       margin-top: 52px !important;
@@ -13,10 +9,6 @@
 
     @media not -moz-pref("sidebar.verticalTabs") {
       &:has(#tabbrowser-tabs .tabbrowser-tab:not([hidden]) ~ .tabbrowser-tab:not([hidden])) {
-        #tabbrowser-tabpanels browser[remoteType="privilegedabout"] {
-          margin-top: 90px !important;
-        }
-
         #sidebar-container,
         #sidebar-box {
           margin-top: 90px !important;

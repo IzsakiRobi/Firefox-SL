@@ -359,6 +359,12 @@ button:not(.toggle-button) {
 }
 
 @-moz-document url-prefix("about:config") {
+@media not -moz-pref("sl.content-under-toolbar.disabled") {
+body {
+  box-sizing: border-box !important;
+  padding-top: 52px !important;
+}
+}
 #about-config-search, #prefs {
   background-color: var(--bg1) !important;
   border: none !important;
