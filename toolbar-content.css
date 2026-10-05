@@ -7,7 +7,7 @@
 
     #sidebar-container,
     #sidebar-box {
-      margin-top: 52px !important;
+      margin-top: calc(52px + var(--firefox-sl-bookmarks-space, 0px)) !important;
     }
 
     @media not -moz-pref("sidebar.verticalTabs") {
@@ -18,13 +18,17 @@
       &:has(#tabbrowser-tabs .tabbrowser-tab:not([hidden]) ~ .tabbrowser-tab:not([hidden])) {
         #sidebar-container,
         #sidebar-box {
-          margin-top: 90px !important;
+          margin-top: calc(90px + var(--firefox-sl-bookmarks-space, 0px)) !important;
         }
 
         #tabbrowser-tabpanels .browserStack {
           margin-top: 0 !important;
         }
       }
+    }
+
+    #navigator-toolbox > #PersonalToolbar {
+      background-color: transparent !important;
     }
 
     #navigator-toolbox {

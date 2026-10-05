@@ -104,12 +104,6 @@
     }
   }
 
-  :root[customizing] {
-    #PersonalToolbar {
-      display: none !important;
-    }
-  }
-
   :root[inFullscreen] {
     #nav-bar {
       padding-left: 0 !important;
@@ -283,45 +277,59 @@
     }
   }
 
-  #PersonalToolbar:not([customizing]) {
+  :root {
+    --firefox-sl-bookmarks-height: 28px;
+    --firefox-sl-bookmarks-space: 0px;
+
+    &:has(#PersonalToolbar:not([collapsed], [hidden])) {
+      --firefox-sl-bookmarks-space: var(--firefox-sl-bookmarks-height);
+    }
+  }
+
+  #navigator-toolbox > #PersonalToolbar {
+    box-sizing: border-box !important;
     position: relative;
     width: 100%;
-    height: 48px;
-    margin: 0 0 -44px 0 !important;
+    margin: 0 !important;
     box-shadow: none !important;
     outline: none !important;
-    background-color: var(--bg4) !important;
-    backdrop-filter: blur(15px) !important;
-    transform: rotateX(90deg);
-    transform-origin: top;
-    transition: transform 105ms linear 500ms !important;
-    z-index: 11;
+    padding: 2px 8px !important;
+    background-color: light-dark(#f7f7f7, #292929) !important;
+    backdrop-filter: none !important;
+    transition: none !important;
 
-    @media -moz-pref("sidebar.verticalTabs") {
-      margin: 0 0 -44px 256px !important;
-      width: calc(100% - 256px);
+    &:not([collapsed], [hidden]) {
+      height: var(--firefox-sl-bookmarks-height) !important;
+      min-height: var(--firefox-sl-bookmarks-height) !important;
+      max-height: var(--firefox-sl-bookmarks-height) !important;
+    }
+
+    &[collapsed] {
+      height: 0 !important;
+      min-height: 0 !important;
+      max-height: 0 !important;
+      visibility: collapse !important;
     }
   }
 
-  #navigator-toolbox:hover:not(:has(.toolbarbutton-1:hover, #urlbar:hover, .tabbrowser-tab:hover))>#PersonalToolbar {
-    transition-delay: 100ms;
-    transform: rotateX(0deg);
-  }
+  #PersonalToolbar toolbarbutton.bookmark-item:not(.subviewbutton) {
+    box-sizing: border-box !important;
+    height: 24px !important;
+    min-height: 0 !important;
+    margin: 0 1px !important;
+    padding: 2px 6px !important;
+    border-radius: 4px !important;
 
-  :has(#PersonalToolbar .bookmark-item[open]) {
-    #PersonalToolbar {
-      transition-delay: 100ms;
-      transform: rotateX(0deg);
+    > .toolbarbutton-icon {
+      width: 16px !important;
+      height: 16px !important;
+      margin-inline-end: 4px !important;
     }
   }
 
-  toolbarbutton.bookmark-item:not(.subviewbutton) {
-    margin: 8px 0 !important;
-  }
-
-  #personal-toolbar-empty-description,
-  toolbarbutton.bookmark-item:not(.subviewbutton) {
-    padding: 4px 7px !important;
+  #personal-toolbar-empty-description {
+    margin-block: 0 !important;
+    padding: 2px 6px !important;
   }
 
   @media (min-width: 610px) and (max-width: 866px) {
@@ -513,7 +521,7 @@
     }
   }
 
-  toolbar .toolbarbutton-1:not(#PlacesChevron) {
+  toolbar .toolbarbutton-1:not(#PlacesChevron, #ipprotection-button) {
     >.toolbarbutton-icon,
     >.toolbarbutton-text,
     >.toolbarbutton-badge-stack {
@@ -572,9 +580,27 @@
     }
   }
 
-  #nav-bar .toolbarbutton-1:is(#ipprotection-button)>.toolbarbutton-icon,
-  #TabsToolbar .toolbarbutton-1:is(#ipprotection-button)>.toolbarbutton-icon {
-    width: 50px !important;
+  :is(#nav-bar, #TabsToolbar) .toolbarbutton-1#ipprotection-button {
+    width: 68px !important;
+    height: 36px !important;
+    border-radius: 999px !important;
+
+    >.toolbarbutton-icon,
+    >.toolbarbutton-badge-stack {
+      box-sizing: border-box !important;
+      width: 68px !important;
+      max-width: none !important;
+      height: 36px !important;
+      padding: 10px !important;
+      clip-path: none !important;
+      border-radius: inherit !important;
+    }
+
+    .ipprotection-icon-stack :is(.toolbarbutton-icon, .ipprotection-icon-layer) {
+      width: 48px !important;
+      max-width: none !important;
+      height: 16px !important;
+    }
   }
 
   #nav-bar {
@@ -2508,8 +2534,7 @@
 
     .panel-header,
     .panel-header+toolbarseparator,
-    .unified-extensions-item-message-deck,
-    .unified-extensions-item-menu-button.subviewbutton {
+    .unified-extensions-item-message-deck {
       display: none !important;
     }
 
@@ -4843,11 +4868,6 @@
           }
         }
 
-        #PersonalToolbar:not([customizing]) {
-          margin: 0 0 -44px 0 !important;
-          width: 100%;
-        }
-
         .tab-group-label {
           font-size: 0 !important;
           margin-left: 10px !important;
@@ -4939,7 +4959,7 @@
             transition: top .25s !important;
 
             &:not(:hover) {
-              top: -53px;
+              top: calc(-53px - var(--firefox-sl-bookmarks-space));
               transition: top .25s !important;
               transition-delay: .5s !important;
             }
@@ -4974,29 +4994,6 @@
 
             :root:not([inFullscreen]):has([sidebar-shown]) & {
               padding-left: 76px !important;
-            }
-          }
-
-          :has(#PersonalToolbar:not([collapsed])) {
-            #navigator-toolbox:not(:hover) {
-              top: -95px;
-            }
-
-            #nav-bar {
-              padding-bottom: 42px !important;
-
-              &::before {
-                top: 94px;
-              }
-            }
-
-            #PersonalToolbar {
-              margin: -42px 0 0 0 !important;
-              transform: none;
-              transition: none !important;
-              background-color: transparent !important;
-              backdrop-filter: none !important;
-              border: none !important;
             }
           }
 
@@ -5596,6 +5593,8 @@
 
   @media (-moz-mac-tahoe-theme) {
     #unified-extensions-panel {
+      --bg1: var(--color-accent-primary) !important;
+      --liquid-panel-hover: var(--color-accent-primary) !important;
       --extensions-item-side-gap: 5px;
       --extensions-item-radius: 7px;
 
@@ -5613,11 +5612,31 @@
       margin-inline: var(--extensions-item-side-gap) !important;
     }
 
-    #unified-extensions-panel .unified-extensions-item-row-wrapper>.subviewbutton {
+    #unified-extensions-panel .unified-extensions-item-row-wrapper>.unified-extensions-item-action-button {
       box-sizing: border-box !important;
-      width: 100% !important;
+      flex: 1 !important;
+      min-width: 0 !important;
+      width: auto !important;
       margin-inline: 0 !important;
       border-radius: var(--extensions-item-radius) !important;
+    }
+
+    #unified-extensions-panel .unified-extensions-item-menu-button.subviewbutton {
+      flex: 0 0 auto !important;
+      width: auto !important;
+      margin-inline: 0 !important;
+      padding-inline: 4px !important;
+      justify-content: center !important;
+
+      >.toolbarbutton-icon {
+        margin-inline: 0 !important;
+        background: transparent !important;
+        border-color: transparent !important;
+        box-shadow: none !important;
+        color: inherit !important;
+        fill: currentColor !important;
+        opacity: 1 !important;
+      }
     }
 
     #unified-extensions-panel #unified-extensions-manage-extensions {
@@ -5626,6 +5645,10 @@
       margin:
         4px var(--extensions-item-side-gap) var(--extensions-item-side-gap) !important;
       border-radius: var(--extensions-item-radius) !important;
+
+      >.toolbarbutton-icon {
+        margin-inline-end: 6px !important;
+      }
     }
 
     #unified-extensions-panel .panel-subview-footer {

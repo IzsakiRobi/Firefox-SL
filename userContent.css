@@ -129,18 +129,34 @@
       html:root {
         box-sizing: border-box !important;
         background-clip: padding-box !important;
-        --firefox-sl-content-offset: 52px;
+        --firefox-sl-toolbar-offset: 52px;
+        --firefox-sl-bookmarks-offset: 0px;
+        --firefox-sl-content-offset: calc(var(--firefox-sl-toolbar-offset) + var(--firefox-sl-bookmarks-offset));
         border-top: var(--firefox-sl-content-offset) solid transparent !important;
       }
 
       @media not -moz-pref("sidebar.verticalTabs") {
         html:root {
-          --firefox-sl-content-offset: 90px;
+          --firefox-sl-toolbar-offset: 90px;
+        }
+      }
+
+      @media -moz-pref("browser.toolbars.bookmarks.visibility", "always") {
+        html:root {
+          --firefox-sl-bookmarks-offset: 28px;
         }
       }
 
       html:root:fullscreen {
         --firefox-sl-content-offset: 0px;
+      }
+    }
+
+    @media -moz-pref("browser.toolbars.bookmarks.visibility", "newtab") {
+      @-moz-document regexp("about:(?:home|newtab)(?:[?#].*)?") {
+        html:root {
+          --firefox-sl-bookmarks-offset: 28px;
+        }
       }
     }
 
