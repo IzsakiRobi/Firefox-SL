@@ -1,5 +1,8 @@
+/* --- Content under toolbar --- */
+
+
 @media (-moz-mac-tahoe-theme) and (not (prefers-reduced-transparency)) and (not -moz-pref("sl.content-under-toolbar.disabled")) {
-  :root:not([inFullscreen], [inDOMFullscreen], [customizing], [chromehidden~="toolbar"], [chromehidden~="location"]):not(:has(#tabbrowser-tabpanels[splitview], .devtools-toolbox-bottom-iframe, .devtools-toolbox-side-iframe)) {
+  :root:not([inDOMFullscreen], [customizing], [chromehidden~="toolbar"], [chromehidden~="location"]):not(:has(#tabbrowser-tabpanels[splitview], .devtools-toolbox-bottom-iframe, .devtools-toolbox-side-iframe)) {
     clip-path: inset(0);
 
     #sidebar-container,
@@ -8,10 +11,18 @@
     }
 
     @media not -moz-pref("sidebar.verticalTabs") {
+      #tabbrowser-tabpanels .browserStack {
+        margin-top: -38px !important;
+      }
+
       &:has(#tabbrowser-tabs .tabbrowser-tab:not([hidden]) ~ .tabbrowser-tab:not([hidden])) {
         #sidebar-container,
         #sidebar-box {
           margin-top: 90px !important;
+        }
+
+        #tabbrowser-tabpanels .browserStack {
+          margin-top: 0 !important;
         }
       }
     }
