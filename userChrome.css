@@ -3373,7 +3373,7 @@ sidebar-tab-row {
 }
 
 #reload-button {
-  list-style-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='context-fill' fill-opacity='context-fill-opacity' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m 10.51,6.14 h 3.71 L 14.5,5.86 V 2.16 a 0.46,0.46 0 0 0 -0.79,-0.33 L 12.35,3.18 A 6.45,6.45 0 0 0 8,1.5 C 4.42,1.5 1.5,4.42 1.5,8 1.5,11.58 4.42,14.5 8,14.5 A 6.47,6.47 0 0 0 14.47,8.63 0.58,0.58 0 0 0 13.95,8 0.59,0.59 0 0 0 13.32,8.52 5.32,5.32 0 0 1 8,13.34 c -2.94,0 -5.34,-2.39 -5.34,-5.34 0,-2.94 2.39,-5.34 5.34,-5.34 a 5.3,5.3 0 0 1 3.53,1.34 l -1.35,1.35 a 0.46,0.46 0 0 0 0.33,0.79 z'/%3E%3C/svg%3E") !important;
+  list-style-image: url("Icons/Reload.svg") !important;
 }
 
 #stop-button {
@@ -3385,11 +3385,11 @@ sidebar-tab-row {
 }
 
 #sidebar-button {
-  list-style-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='context-fill' fill-rule='evenodd' fill-opacity='context-fill-opacity' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M 5.5,5.63 A 0.5,0.46 0 0 0 5,5.17 H 3 A 0.5,0.46 0 0 0 3,6.09 H 5 A 0.5,0.46 0 0 0 5.5,5.63 Z m 0,2.28 A 0.5,0.46 0 0 0 5,7.45 H 3 A 0.5,0.46 0 0 0 3,8.37 H 5 A 0.5,0.46 0 0 0 5.5,7.91 Z m 0,2.28 A 0.5,0.46 0 0 0 5,9.74 H 3 A 0.5,0.46 0 0 0 3,10.65 H 5 A 0.5,0.46 0 0 0 5.5,10.19 Z M 16,12.4 V 3.65 A 2,2.12 0 0 0 14,1.52 H 2 A 2,2.12 0 0 0 0,3.65 V 12.4 A 2,2.12 0 0 0 2,14.53 h 12 a 2,2.12 0 0 0 2,-2.12 z M 1.25,12.56 V 3.49 l 0.6,-0.64 h 4.9 V 13.2 H 1.85 Z M 8,13.2 h 6.15 l 0.6,-0.64 V 3.49 L 14.15,2.85 H 8 Z'/%3E%3C/svg%3E") !important;
+  list-style-image: url("Icons/Sidebar.svg") !important;
 }
 
 #PanelUI-menu-button {
-  list-style-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='context-fill' fill-opacity='context-fill-opacity' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m 5,5 h 14 c 1.33,0 1.29,1.96 -0.04,1.96 H 5 C 3.67,6.96 3.67,5 5,5 m 14,6 H 5 c -1.33,0 -1.33,2 0,2 h 14 c 1.33,0 1.33,-2 0,-2 m 0,8 H 5 C 3.67,19 3.67,17 5,17 H 19 C 20.33,17 20.33,19 19,19'/%3E%3C/svg%3E") !important;
+  list-style-image: url("Icons/Settings.svg") !important;
 }
 
 #bookmarks-menu-button .toolbarbutton-icon {
