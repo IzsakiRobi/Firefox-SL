@@ -1,4 +1,4 @@
-# Firefox-SL v1.4
+# Firefox-SL v1.5
 
 A Safari-like Firefox theme for macOS, with translucent toolbars and menus.
 
@@ -10,7 +10,7 @@ A Safari-like Firefox theme for macOS, with translucent toolbars and menus.
 
 ## Install
 
-1. Download and extract [Firefox-SL-v1.4.zip](https://github.com/IzsakiRobi/Firefox-SL/releases/download/v1.4/Firefox-SL-v1.4.zip).
+1. Download and extract [Firefox-SL-v1.5.zip](https://github.com/IzsakiRobi/Firefox-SL/releases/download/v1.5/Firefox-SL-v1.5.zip).
 2. In `about:profiles`, open the active profile's **Root Directory** using **Show in Finder**.
 3. Quit Firefox, back up any existing `chrome` folder, then copy the extracted `chrome` folder into the profile root.
 4. In `about:config`, set `toolkit.legacyUserProfileCustomizations.stylesheets` to `true` and `browser.nova.enabled` to `false`.
