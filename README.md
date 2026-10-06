@@ -1,5 +1,7 @@
 # Firefox-SL v1.5
 
+**Compatible with Firefox 154+ · Optimized for Firefox 157.**
+
 A Safari-like Firefox theme for macOS, with translucent toolbars and menus.
 
 <p align="center">
@@ -19,5 +21,3 @@ A Safari-like Firefox theme for macOS, with translucent toolbars and menus.
 The Home page's Nova design can remain enabled with `browser.newtabpage.activity-stream.nova.enabled` set to `true`.
 
 To disable content appearing under the translucent toolbar, create the Boolean preference `sl.content-under-toolbar.disabled` in `about:config` and set it to `true`, then restart Firefox.
-
-Updated for Firefox 157 on macOS. Compatibility with older Firefox versions still needs testing.
